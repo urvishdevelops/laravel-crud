@@ -19,6 +19,38 @@
         </div>
       </nav>
 
+
+<div class="container mt-5">
+  <h2>Bordered Table</h2>
+        <p>The .table-bordered class adds borders on all sides of the table and the cells:</p>            
+        <table class="table table-bordered">
+          <thead>
+            <tr>
+              <th>sr.no</th>
+              <th>Name</th>
+              <th>Description</th>
+              <th>Image</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+
+            @foreach ($products as $product)
+            <tr>
+              <td>{{$loop->index}}</td>
+              <td>{{$product->name}}</td>
+              <td>{{$product->description}}</td>
+              <td><img src="products/{{$product->image}}" alt="" class="rounded-circle" width="50" height="50"></td>
+              <td><a href="products/{{$product->id}}/edit" class="btn btn-dark btn-sm">Edit</a></td>
+            </tr>
+            @endforeach
+            
+          </tbody>
+        </table>
+</div>
+
+
+
       <div class="container mt-2">
         <div class="text-right">
             <a href="products/create" class="btn btn-dark ">New Product</a>

@@ -20,12 +20,15 @@
     <div class="row justify-content-center">
         <div class="col-sm-8">
             <div class="card mt-5">
-            <form action="{{route('products.store')}}" files=true method="POST" class="m-3" enctype="multipart/form-data">
+                <h3>Product Edit: {{$product->name}}</h3>
+            <form action="update" files=true method="POST" class="m-3" enctype="multipart/form-data">
                 @csrf
+
+                @method('PUT')
                 <div class="form-group">
                     <label>Name</label>
                     <input type="text" name="name" class="form-control"
-                    value="{{old('name')}}"
+                    value="{{old('name', $product->name)}}"
                     >
                     @if($errors->has('name'))
                         <span class="text-danger">{{$errors->first('name')}}</span>
@@ -33,7 +36,7 @@
                 </div>
                 <div class="form-group">
                     <label>Description</label>
-                    <textarea name="description" rows="3" class="form-control" cols="30" rows="10" value="{{old('description')}}"></textarea>
+                    <textarea name="description" rows="3" class="form-control" cols="30" rows="10" value="{{old('decription', $product->description)}}"></textarea>
                     @if($errors->has('description'))
                         <span class="text-danger">{{$errors->first('description')}}</span>
                     @endif
