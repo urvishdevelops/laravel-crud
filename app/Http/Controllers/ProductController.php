@@ -46,36 +46,33 @@ class ProductController extends Controller
 
       $product->save();
 
-      return back()->withSuccess('Product Created Successfully!!');
+      return redirect()->route('products.index')->with(['message'=> 'Product inserted successfully!']);
    }
 
    public function edit($id)
    {
       $product = Product::where('id', $id)->first();
-    return view('products.edit', ['product' => $product]);
+      return view('products.edit', ['product' => $product]);
    }
-   public function update($id)
+   public function update(request $request, $id)
    {
-   // Validate data
+
+      // Validate data
 
       $request->validate([
          'name' => 'required',
          'description' => 'required',
-         'image' => 'required'
+         'image' => 'nullable'
       ]);
 
+      $product = Product::where('id', $id)->first();
 
-
-      $file = $request->file('image')->extension();
-
-      $imageName = time() . '.' . $file;
-
-
-      $request->file('image')->move(public_path("products"), $imageName);
-
-      $product = new Product;
-
-      $product->image = $imageName;
+      if (isset($request->image)) {
+         $file = $request->file('image')->extension();
+         $imageName = time() . '.' . $file;
+         $request->file('image')->move(public_path("products"), $imageName);
+         $product->image = $imageName;
+      }
 
       $product->name = $request->name;
 
@@ -83,6 +80,20 @@ class ProductController extends Controller
 
       $product->save();
 
-      return back()->withSuccess('Product Created Successfully!!');
+      // return back()->withSuccess('Product updated Successfully!!');
+      return redirect()->route('products.index')->with(['message' => 'Product updated Successfully!!']);
+   }
+
+
+   public function destroy($id)
+   {
+      $product = Product::find($id);
+
+      if ($id != null) {
+         $product->delete();
+         return redirect()->route('products.index')->with(['message' => 'Product Deleted!!']);
+      } else {
+         return redirect()->route('products.index')->with(['message' => 'Product Deleted!!']);
+      }
    }
 }

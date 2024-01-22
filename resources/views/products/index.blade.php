@@ -26,7 +26,7 @@
         <table class="table table-bordered">
           <thead>
             <tr>
-              <th>sr.no</th>
+              <th>Sr.no</th>
               <th>Name</th>
               <th>Description</th>
               <th>Image</th>
@@ -41,7 +41,12 @@
               <td>{{$product->name}}</td>
               <td>{{$product->description}}</td>
               <td><img src="products/{{$product->image}}" alt="" class="rounded-circle" width="50" height="50"></td>
-              <td><a href="products/{{$product->id}}/edit" class="btn btn-dark btn-sm">Edit</a></td>
+              <td><a href="products/{{$product->id}}/edit" class="btn btn-dark btn-sm">Edit</a> | 
+                <form action="products/{{$product->id}}/delete" method="POST" class="d-inline">
+                @csrf
+                @method('DELETE')
+              <button type="submit" class="btn btn-danger btn-sm">Delete</button>
+              </form></td>
             </tr>
             @endforeach
             
